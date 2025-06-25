@@ -1,0 +1,777 @@
+---
+title: "Intro to Programming Pedagogy"
+author: "Ellen Bledsoe (ebledsoe@arizona.edu)"
+format: html
+editor: visual
+output:
+  html_document:
+    toc: yes
+    toc_float: true
+    toc_depth: 4
+---
+
+# Introduction to R/RStudio
+
+## Why Computer Programming?
+
+As scientists, our goal should not only be to contribute to knowledge but also to share our findings transparently to facilitate thorough peer review and ensure that others can build upon our work.
+
+Computer programming can help us achieve these goals effectively by facilitating **computational reproducibility** and contributing to **Open Science**.
+
+**Computational reproducibility** means that all of data processing, analysis, and visualization can be entirely and independently recreated, yielding the exact same outputs. This is particularly important for ensuring the reliability of research, making it easier to verify findings.
+
+Having a clear record of every step taken to process, analyze, and visualize data is necessary for computational reproducibility. Using computer programming instead of "point-and-click" software helps ensure that every step can be recreated.
+
+Computational reproducibility is a large component of **Open Science**, a movement to make research practices, data, methods, and results accessible to everyone. It promotes transparency and collaboration by sharing not just conclusions but the entire process that led to them.
+
+Open Science has numerous components, as you can see in the figure above. In this class, we are focusing primarily on open data, open methodology, and open source software.
+
+-   Using interoperable file types (e.g., CSV files) is an important part of making data openly available.
+-   Using open-source software for analyses instead of expensive statistical programs (which are often point-and-click) is an important part of making science transparent and accessible.
+
+## What's What: R vs. RStudio vs. Posit Cloud
+
+### What is R?
+
+-   Programming language and software
+-   Started as a statistics and data analysis environment, but it can also build websites, run simulations, and many other things
+-   R is what runs all of the code we will write this semester
+-   R is **open source**, meaning it is free, non-proprietary (not owned by a company), and reproducible. This also means that anyone can contribute to it!
+-   Separate from RStudio
+
+### What is RStudio?
+
+-   IDE - Integrated Development Environment
+-   Makes developing code in R easier by including a number of tools in one place
+-   Created by a company that is now called Posit
+
+### What is Posit Cloud?
+
+-   An online version of RStudio that runs in your browser
+-   We're using it because it:
+    1.  Avoids installation difficulties
+    2.  Makes sharing code with instructors for debugging easier
+    3.  Leaves some of the complexities of working with R until after we've learned the basics
+-   We will switch to using RStudio on our own computers in the second half of the semester.
+
+## Rstudio Mini-Tour
+
+### What do all of these panels do?
+
+Let's explore each of the panels in RStudio. They are all useful in their own way!
+
+1.  *Source* (upper left): This is where documents which have data or code in them are opened. You can save all the code you type here for future (re)use, which is a big reason coding in R is reproducible.
+
+2.  *Console* (bottom left): This is where code from the source is "run" and you see the outputs. You can also execute lines of code which you type into the console, but they will not be saved. You can think of this section as where RStudio really interfaces with R--it is where R actually evaluates code within RStudio.
+
+3.  *Environment* (upper right): This panel becomes more helpful as you get familiar with R and RStudio. It keeps track of data objects and other items you have created and gives a bit of information about them.
+
+4.  *Files/Help/etc.* (bottom right): This panel is (clearly) very multifaceted. The Files tab lets you see all the files in your current workspace. For us, the Help tab is probably what we will use the most. This is where we can search the R documentation for information about functions we use.
+
+### File Types with R Code
+
+Through your experiences using R, you will likely encounter a number of different types of files that contain R code. The two most common are *R scripts* and *Quarto files* (for those familiar with RMarkdown, Quarto is the new and improved RMarkdown).
+
+An **R script** is a plain text file where you write and run R code line by line. R scripts are purely code-based and don’t include formatted documentation for sharing or presenting results. These documents end with `.R`.
+
+We will be using a **Quarto** file (`.qmd`) for this workshop. Quarto files uses something called "RMarkdown" to combine R code with formatted text, allowing you to create dynamic, reproducible documents. This practice is called "literate programming."
+
+Quarto is a great option for everyday coding but also for creating reports, presentations, or even academic papers and websites. You can integrate explanations, equations, and visualizations alongside your code, and then export the output to formats like HTML, PDF, or Word.
+
+## Intro to Coding in R
+
+### Basic Expressions (R as a Calculator)
+
+Let's start by typing an expression in the console (below).
+
+Try multiplying 5 and 3 in the Console (*hint*: \* means multiply). Hit `Enter` to run that line of code.
+
+### Quarto and Code Chunks
+
+As mentioned above, Quarto (`.qmd`) is a file format that lets us incorporate text and code into one document seamlessly. In fact, it is the file format for this document!
+
+-   For writing text, you can type as you normally would.
+-   Code chunks are a bit different:
+    -   Near the top right of your screen you can toggle between viewing this document as under Source or Visual.
+    -   If you view this document under `Source` mode, you will see that all code chunks are sandwiched between an opening line of code with 3 backticks and `{r}` and a closing line of code with 3 more backticks.
+    -   In `Visual` mode, however, you can type R code in the lines under `{r}`.
+    -   To include text in chunks, you will need to put a `#` in front. R will not read anything in the line after `#` as code.
+    -   Commenting your code is considered best practice. Not only does it help other people understand what your code is doing, but it will help *you* remember what your code is doing and why!
+
+Code chunks look like this:
+
+```{r}
+# This is a code chunk!
+```
+
+To run a chunk of code, click the green arrow on the top right corner of the chunk.
+
+You can also run one or a few lines of code at a time by having your cursor on the line or highlighting multiple lines and hitting `Ctrl` + `Enter` (or `Cmd` + `Enter` on a Mac).
+
+A quick shortcut for adding a code chunk is `Ctrl + Alt + i` (`Cmd + Opt + i` on a Mac). Alternatively, you can go to Code \> Insert Chunk.
+
+### Some Code Chunk Practice
+
+Let's work with an example code chunk.
+
+```{r}
+# convert grams to kg
+50 / 1000 * 2.2
+```
+
+## Assigning Objects (Creating Variables)
+
+Assignments are really key to almost everything we do in R. This is how we create permanence in R. Anything can be saved to an object, and we do this with the assignment operator, `<-`.
+
+The short-cut for `<-` is `Alt + -` (or `Option + -` on a Mac)
+
+*Note:* You can technically use either `<-` or `=`. I recommend getting used to `<-`, as this is standard practice (now) in R and recommended in style guides. The reasons why are complicated and don't often arise in most situations, but it is still good practice.
+
+```{r}
+weight_g <- 50
+```
+
+We can see that this object has been created by looking in the Environment tab.
+
+Objects work just like the value itself. For example, we can use them in mathematical expressions.
+
+```{r}
+weight_g / 1000
+weight_g / 1000 * 2.2
+weight_lb <- weight_g / 1000 * 2.2
+```
+
+The object won't change unless you assign a new value to it directly using the assignment operator (`<-`).
+
+```{r}
+weight_g
+
+weight_g * 2
+weight_g
+
+weight_g <- 26
+weight_g
+```
+
+### Some RStudio Tips
+
+Use the `tab` key to auto-complete objects (and other things)
+
+-   Let the computer do repetitious work.
+-   It's easier and causes fewer mistakes!
+
+Also, you can see the commands you've run under `History` in case you forgot to write something down in your Source code.
+
+------------------------------------------------------------------------
+
+# Let's Create a Report with Data!
+
+The first step to start any R exploration is to install and activate the "packages" that perform the behind-the-scenes functions of your analysis.
+
+For our lesson (& recommended when teaching!), we will primarily use packages that are contained within the `tidyverse`, which is a wrapper package or "metapackage" that lets you install and open one package, but gives you access to many other useful packages that are embedded behind the scenes. The core `tidyverse` includes *almost* all of the packages that your students are likely to use in day-to-day data analyses.
+
+We will also install and load the `here` package, which helps facilitate seamless file access across your directory subfolders.
+
+To install a package, you run the following command *within* a code chunk. Note that with the `install.packages()` command, the package name **always** needs to be in quotation marks.
+
+```{r Install_packages}
+#| eval: false
+# You only need to install each package ONCE on your computer
+install.packages("tidyverse", repos = "http://cran.rstudio.com/")
+install.packages("here", repos = "http://cran.rstudio.com/")
+```
+
+Next, you need to tell R to *activate* the package(s) you want to use. Use the following syntax to load each package. Note that in this command, the package name is *not* in quotes!
+
+```{r Load_package}
+#| message: false
+library(tidyverse)
+```
+
+## Reading in Data
+
+One of the most basic things you will need to do in R is read in data sets, which may be imported from Excel files, text files, and more.
+
+The easiest type of file to read in to R is a comma separated values (CSV) file. You can save an Excel workbook (or Numbers workbook or Google Sheet) as a CSV file by using the `Save as ...` menu item.
+
+First, let's look at the dataset.
+
+Let's read in a small mammal dataset collected by the National Ecological Observatory Network (NEON). We'll use the function `read_csv()`. This will import the dataset as a `tibble`, which is effectively a fancy data frame.
+
+We'll also embed a structure from the `here` package to specify the file location within our working directory. This is important because sometimes .Rmd files can get grumpy if they are in a different subfolder than the data files we are trying to read or write.
+
+First, you'll need to download the data set from the workshop site into the `data` sub-folder in your directory folder. Then, we'll read in the file.
+
+```{r Read in data}
+
+mammals <- read_csv(here("data", "NEON_small_mammals.csv"))
+
+```
+
+After importing a dataset, we want to take a quick look at the data. How many rows and columns are there? What type of data is in each column? Is the data "tidy"?
+
+```{r preview_data}
+
+# Print the first 6 rows of the dataset to the console
+head(mammals)
+
+# Get a "glimpse" of the dataset, including the value types of each variable
+glimpse(mammals)
+
+# Print the structure of the dataset 
+str(mammals)
+```
+
+We may also want to get a quick overview of the mean and variability of our variables. We can use a `summary()` function to return many of the "standard" summary statistics.
+
+```{r summarize_dataset}
+summary(mammals)
+```
+
+Finally, we might want to examine specific columns; for example, to see how many unique sites or unique species the dataset includes.
+
+```{r unique_values}
+unique(mammals$siteID)
+unique(mammals$taxonID)
+```
+
+Based on these early looks, there is a lot going on in this dataset! We have 63 different variable columns and over 7000 unique observations (rows) collected across 21 different taxa from two distinct sites.
+
+Often, when starting with raw datasets, we want to apply a number of "data wrangling" functions to clean the data and focus our analysis or visualization.
+
+Functions from within the `dplyr` (and `tidyr`) package (part of the `tidyverse`) come in handy with these tasks!
+
+------------------------------------------------------------------------
+
+## Wrangling with `dplyr`
+
+Some of the core functions of `dplyr` that we use for data wrangling are:
+
+-   **select():** subset columns
+-   **filter():** subset rows on conditions
+-   **mutate():** create new columns by using information from other columns
+-   **rename():** change names of existing columns
+-   **count():** count discrete values
+-   **group_by()** and **summarize():** calculate summary statistics for grouped data
+-   **arrange():** sort results
+
+### Selecting Columns and Filtering Rows
+
+We can select specific *columns* from our dataset to retain (or remove) using `select()` commands. When used on its own, the select command requires that we first name the data object we're selecting from within, then indicate the focal columns.
+
+```{r dplyr_select}
+
+# Keep only the columns for siteID, taxonID, sex, and weight
+select_test <- select(mammals, siteID, taxonID, sex, weight)
+
+```
+
+Notice that in our new `select_test` object, there are only 4 columns, but still all 7273 observations.
+
+If we want to keep most columns but exclude a few specific ones, we can use a `-` before our column names to "anti-select" them.
+
+```{r anti-select}
+# Exclude uid, nightuid columns
+anti_select <- select(mammals, -uid, -nightuid)
+head(anti_select)
+```
+
+Similarly, we can use a `filter()` to retain (or remove) *rows* from our dataset based on criteria we specify.
+
+```{r filter}
+# Keep only observations of "BLBR" taxon
+blbr <- filter(mammals, 
+               taxonID == "BLBR")
+
+# Include multiple criteria to further refine
+blbr_small_females <- filter(mammals, 
+                             taxonID == "BLBR", 
+                             sex == "F", 
+                             weight < 15)
+```
+
+------------------------------------------------------------------------
+
+#### Teaching Tip!
+
+When teaching students new coding concepts (such as using specific functions), employing a "we do, you do" structure is a good practice.
+
+"We do": live-coding together, as the instructor explains how the function works "You do": in small groups or on their own, have students attempt to perform a similar task applying the new skill on their own
+
+------------------------------------------------------------------------
+
+### Piping Functions Together
+
+As we're applying these functions, you might notice we're saving the output as separate data objects. If we don't have a need for that specific subset in the future, it is considered an "intermediate object." We want to avoid filling up our RStudio environment with intermediate objects to minimize confusion about what we're working with.
+
+Instead, we can take advantage of "pipes" from the `magrittr` package (also within `tidyverse`!) to link multiple functions together in a wrangling/analysis workflow. You can think of the pipe saying "and then" when linking multiple steps in your code.
+
+Using pipes can be helpful because it not only reduces our need to save unnecessary intermediate objects, but also allows us to more easy "read" the wrangling actions we're taking in a code chunk.
+
+Let's try piping together a number of wrangling steps to select and filter our mammals data to create a subset that includes only male and female adults with a measured weight and hindfoot length (no `NA`s). We'd also like our subset to only include the variables: `siteID`, `collectDate`, `taxonID`, `sex`, `weight`, and `hindfootLength`.
+
+```{r piped_workflow}
+
+subset <- mammals %>% 
+  filter(sex %in% c("M", "F"), 
+         !is.na(weight),
+         !is.na(hindfootLength)) %>% 
+  select(siteID, collectDate, taxonID, sex, weight, totalLength)
+
+```
+
+In one connected step, we have quickly cleared out over 1000 non-relevant observations and focused our subset to the 5 columns relevant to our analysis! 
+
+Pause for a moment: Think of how much of a hassle that could be to do in Excel! What are some possible issues with doing this is Excel?
+
+### Create New Columns
+
+Sometimes, we may want to create a new column based on information in an existing column---for example, to convert units for a variable, add two columns together, extract information from within a column, etc.
+
+To do this, we can use `mutate()` functions.
+
+```{r dplyr_mutate}
+
+# Create stand-alone "year" column from collectDate
+subset %>% 
+  mutate(year = year(collectDate))
+
+```
+
+Note that the `subset` object has not changed in the Environment. Why is that?
+
+```{r dplyr_rename}
+# Convert weight from grams to kg
+subset <- subset %>% 
+  rename(weight_g = weight) %>% 
+  mutate(weight_kg = weight_g / 1000)
+subset
+```
+
+We also snuck a `rename()` function in to update the column name of our original weight, as we want to be clear about units for each column!
+
+### Grouping & summarizing
+
+Another powerful set of `dplyr` functions allows us to use a **split-apply-combine** paradigm, where we:
+
+-   **split** the data into groups
+-   **apply** an analysis to each group
+-   **combine** the results in a table
+
+To do this, we pair a `group_by()` command with `summarize()`.
+
+Let's try this to calculate the mean weight in grams + its standard deviation of each sampled taxa!
+
+```{r group_by_summarize}
+subset %>% 
+  group_by(taxonID) %>% 
+  summarize(mean_weight_g = mean(weight_g),
+            sd_weight_g = sd(weight_g),
+            count = n())
+```
+
+We can further refine our summaries by including multiple variables within our `group_by()` command.
+
+For example, we can calculate those same weight summary statistics for male and female individuals within each taxon by adding **just one word** to our earlier command!
+
+```{r count}
+subset %>% 
+  # variables in the group by column are nearly always categorical/qualitative falvored
+  # students often struggle to grasp that the variable to summarize does not go into group_by
+  group_by(taxonID, sex) %>% 
+  summarize(mean_weight_g = mean(weight_g),
+            sd_weight_g = sd(weight_g),
+            count = n())
+```
+
+As an aside, if you want your summary values to be rounded to a specific number of decimal points, you can add that in, too, using a round() command *within* your summarize functions. 
+
+Be careful about keeping track of your parentheses! Turning on rainbow parentheses within your RStudio Global Settings can help by providing an additional visual cue about lining up open- and close-parentheses.
+
+```{r round_values}
+
+weight_summary <- subset %>% 
+  group_by(taxonID, sex) %>% 
+  summarize(mean_weight_g = round(mean(weight_g), 2),
+            sd_weight_g = round(sd(weight_g), 2),
+            count = n())
+
+weight_summary
+
+```
+
+### Saving and Exporting Data
+
+Often, a .qmd file will import a raw data then do some wrangling, analysis, and/or visualization. If you want to save a copy of your "cleaned" or processed data, you can use a `write_csv()` command.
+
+```{r}
+write_csv(weight_summary, "../data/weight_summary.csv"))
+```
+
+#### Challenge 1
+
+Try using as single set of piped `dplyr` functions to accomplish the following task, starting with the full `mammals` data set we imported:
+
+Determine how many unique PELE (*Peromyscus leucopus*) were sampled from each site in 2015, and calculate the mean hindfoot length and standard error by sex.
+
+```{r CHALLENGE_1}
+
+# KEY
+mammals %>% 
+  mutate(year = year(collectDate)) %>% 
+  filter(year == 2015,
+         taxonID == "PELE",
+         recapture == "N",
+         !is.na(hindfootLength)) %>% 
+  group_by(sex, siteID) %>% 
+  summarize(count = n(),
+            mean_hindfoot = mean(hindfootLength, drop.na = T),
+            se_hindfoot = (sd(hindfootLength)/sqrt(count)))
+
+```
+
+#### Challenge 2
+
+For our plotting exercise, we'd like to focus on smaller rodents (less than or equal to 60 grams) captured only at the SCBI site since 2020. 
+
+Use piped commands to create a new data object, `plot_mamm` from the `mammals` data that accomplishes this includes only the relevant observations.
+
+```{r CHALLENGE_2}
+
+# KEY
+plot_mamm <- mammals %>% 
+  mutate(year = year(collectDate)) %>% 
+  filter(weight <= 60,
+         siteID == "SCBI",
+         year == 2020) %>% 
+  arrange(weight)
+
+tail(plot_mamm$weight)
+
+unique(plot_mamm$siteID)
+
+unique(plot_mamm$year)
+
+```
+
+------------------------------------------------------------------------
+
+# Data Visualization with `ggplot2`
+
+We will focus on plotting using the `ggplot2` package, which automatically loads as part of the `tidyverse` when you run the command `library(tidyverse)`.
+
+A strength and challenge of using `ggplot2` is that there are nearly endless ways you can customize and refine your plots. As such, it's important to have a useful and readable reference guide that you can search when you know what you *want* to do, but aren't yet sure *how* to do it in ggplot phrasing.
+
+I recommend the following three resources as a starting point:
+
+-   [ggplot2 reference manual](https://ggplot2.tidyverse.org/reference/index.html)
+-   [R Graphics Cookbook](https://r-graphics.org/)
+-   [R colors](https://r-charts.com/colors/) (specifically for finding *just* the right color options for your plots)
+
+## Recipe for a `ggplot`
+
+You can think about building a ggplot like adding layers to a cake. While you can add as many layers as you like to refine and customize a plot, every ggplot requires three key ingredients: 
+
+- ggplot: the initial canvas we're working on 
+- geom: geometric objects (i.e. the type of plot 
+- histogram, points, line, etc) 
+- aes: aesthetic mappings (e.g., which variables go on x- and y-axes)
+
+### Histograms
+
+An example of a "bare bones" ggplot for our mammals data could be as follows, to create a histogram of measured weights:
+
+```{r histogram}
+ggplot(data = plot_mamm,
+       aes(x = weight)) +
+  geom_histogram()
+```
+
+While your data plotted, you probably got a warning to the effect of "`stat_bin()` using `bins = 30`. Pick better value with `binwidth`."
+
+This means that there is a mismatch between how many "bins" along the x-axis you are setting up, relative to the size of the dataset.
+
+#### Challenge 3! 
+Enter a Help command in the Console (e.g., `?geom_histogram`) to determine how to change the number of bins used in our plot.
+
+```{r CHALLENGE_3}
+
+# KEY
+ggplot(data = plot_mamm,
+       aes(x = weight)) +
+  geom_histogram(bins = 15)
+
+```
+
+You may also have noticed another warning: "Removed 2 rows containing non-finite values (`stat_bin()`)." This is just R giving you a heads-up that two observations in your dataset were missing values for the requested x-axis variable (in this case, bill length), so those observations were not plotted.
+
+It is important when making your own figures (& training your students!), that you investigate whether this type of warning is driven by NA values in your dataset (no problem) *or* if you have manually set axis limits that are excluding data points (adjust your axes to encompass your observations!).
+
+Now that the bin number is a better fit to our dataset, we can add additional aesthetics and ggplot layers to customize our plot and the story it is telling.
+
+For example, we can include a `labs()` command to customize our x- and y-axis labels, & add a built-in theme command to adjust the non-data aesthetics of our figure.
+
+Some of the [built-in themes](https://ggplot2.tidyverse.org/reference/ggtheme.html) include `theme_bw()`, `theme_bw()`, `theme_light`, etc.
+
+#### Challenge 4! 
+Add custom x- and y-axis labels to your plot, and include a default theme of your choosing.
+
+```{r CHALLENGE 4!}
+
+# KEY
+ggplot(data = plot_mamm,
+       aes(x = weight)) +
+  geom_histogram(bins = 15) +
+  labs(x = "Weight (g)", 
+       y = "Observations") +
+  theme_bw()
+
+```
+
+We can include an additional mapping aesthetic to tell R to fill our histogram bars based on the `taxonID`
+
+```{r}
+
+ggplot(data = plot_mamm,
+       aes(x = weight,
+           fill = taxonID)) +
+  geom_histogram(bins = 15) +
+  labs(x = "Weight (g)", 
+        y = "Observations") +
+ theme_bw()
+
+```
+
+Finally, we should adjust the y-axis so that all our data are encompassed within the axis limits.
+
+```{r}
+
+ggplot(data = plot_mamm,
+       aes(x = weight,
+             fill = taxonID)) +
+  geom_histogram(bins = 15) +
+  labs(x = "Weight (g)", 
+        y = "Observations") +
+  scale_y_continuous(limits = c(0, 150),
+                     breaks = seq(0, 150, 25)) +
+  theme_bw()
+
+```
+
+### Density Plots
+
+You use similar approaches to make a density plot, but substitute in `geom_density()` as your geom. This could be a good approach to more clearly visualize the distributions of weight by taxon in our data!
+
+```{r Make a density plot}
+
+ggplot(data = plot_mamm,
+       aes(x = weight,
+             fill = taxonID)) +
+  geom_density(alpha = 0.5) +
+  labs(x = "Weight (g)", 
+        y = "Observations") +
+  scale_y_continuous(limits = c(0, 0.6)) +
+  theme_bw()
+
+```
+
+### Boxplots
+
+Boxplots are an information-rich way to display distributions, because they explicitly visualize the median, interquartile range, and any outliers across categorical variables (x-axis).
+
+When making a boxplot, you'll need to map aesthetics for your x-axis variable (something categorical) *and* your y-axis (something numeric). Aesthetics for `fill` or `color` are optional.
+
+For example, our weight data visualized as boxplots by taxon looks like:
+
+```{r}
+ggplot(data = plot_mamm,
+       aes(x = taxonID,
+           y = weight,
+           fill = taxonID)) +
+    geom_boxplot() +
+    labs(x = "Taxon", 
+        y = "Weight (g)") +
+    theme_bw()
+```
+
+While boxplots pack in a lot of information, it can still be useful to include a visualization of the full dataset. We can use an additional geom, like `geom_jitter()` to include the raw data points.
+
+We'll include this geom *before* our `geom_boxplot()` call so that the points appear *behind* the boxplots (layers are added to our ggplot in the order they are written). Note that we'll now specify `fill = NA` within our `geom_boxplot()` call so that the bo
+
+```{r}
+
+mammals %>% 
+  drop_na(weight) %>% 
+  ggplot(aes(x = taxonID,
+             y = weight,
+             col = taxonID)) +
+  geom_jitter(width = 0.2, height = 0,
+              alpha = 0.6) +
+  geom_boxplot(fill = NA, col = "gray10") +
+    labs(x = "Taxon", 
+        y = "Weight (g)") +
+    theme_bw()
+
+
+ggplot(data = plot_mamm,
+       aes(x = taxonID,
+           y = weight,
+           col = taxonID)) +
+  geom_jitter(width = 0.2, height = 0,
+              alpha = 0.6) +
+  geom_boxplot(fill = NA, col = "gray10") +
+  labs(x = "Taxon", 
+       y = "Weight (g)") +
+  theme_bw()
+
+```
+
+### Scatter plots
+
+We create a scatter plot between two continuous variables with `geom_point()`.
+
+First, let's focus our analysis on just "PELE" individuals. Use a code chunk to create this new subset from the `mammals` data.
+
+```{r Create PELE subset}
+
+PELE <- mammals %>% 
+  filter(taxonID == "PELE")
+
+```
+
+```{r scatterplot}
+
+ggplot(data = PELE, 
+       aes(x = hindfootLength,
+           y = weight,
+           col = taxonID)) + 
+  geom_point() + 
+  theme_bw()
+
+```
+
+We can easily add a trendline to a plot using `geom_smooth()`. To ensure it is a *linear* fit, include `method = lm` within your `geom_smooth()` command.
+
+```{r trendline}
+
+ggplot(data = PELE, 
+       aes(x = hindfootLength,
+           y = weight,
+           col = taxonID)) + 
+  geom_point() + 
+  geom_smooth(method = lm) +
+  theme_bw()
+
+```
+
+**Note!** 
+It's best practice to only include linear trendlines when the relationship you are visualizing is **statistically significant**. R will not *stop* you from fitting any line you want to your data, so it is up to you to separately run appropriate statistical tests to ensure what you are visualizing is accurate and meaningful!
+
+------------------------------------------------------------------------
+
+# Statistical Analyses in R
+
+If we have remaining time, we will take a *super* quick look at how to do some statistical analyses!
+
+## Linear regression
+
+We use linear regression to quantify the slope of best fit line between two continuous variables and test whether that slope is significantly different from zero. Our regression model will also tell us about how strong a predicive relationship is between our two variables.
+
+We use the `lm()` function to set up our linear model. Most model functions take a function argument and a data argument. The function represents the relationship you're testing for between variables and the data takes the name of the data object.
+
+For exploratory purposes, let's look at the (potential) linear relationship we plotted above:
+
+```{r Linear regression}
+
+# Specify our linear model
+lm_fit <- lm(hindfootLength ~ weight, data = mammals)
+
+# Print regression output
+summary(lm_fit)
+
+```
+
+For more help interpreting model output, check out this [explainer](https://towardsdatascience.com/understanding-linear-regression-output-in-r-7a9cbda948b3)
+
+It's important to remember that our regression test has a number of assumptions that we need to confirm it meets before we move forward in our model interpretation!
+
+**Linear Regression Model Assumptions:**
+
+-   Observations are independent of each other
+-   There is a linear relationship between x and y
+-   Values of model residuals are normally distributed
+-   Variance of model residuals is the same across all values of x
+
+We should know whether the first assumption was met based on how data were collected. We can assess the other three assumptions using the `plot()` function to graph elements of our fitted linear model (`lm_fit`).
+
+*Linear Relationship: Residuals vs. Fitted Plot* 
+
+We plot the residuals vs. fitted (predicted) values of y and look at the relationship. Ideally, the points should be scattered around a (roughly) horizontal line centered at zero.
+
+```{r}
+# Residuals vs. fitted plot
+plot(lm_fit, which = 1)
+```
+
+*Normality of Residuals: Q-Q Plot* 
+
+If the residuals are normally distributed, we expect the points to fall (approximately) along the diagonal line. The "tails" should not veer too far in either direction.
+
+```{r}
+# QQ residuals plot
+plot(lm_fit, which = 2)
+```
+
+*Consistent Variance of Residuals: Scale-Location Plot* 
+
+To test this, we use the "scale-location" plot of standardized residuals vs. fitted values. The fit should be roughly a horizontal line with points scattered around it randomly.
+
+```{r}
+# Scale-Location plot
+plot(lm_fit, which = 3)
+```
+
+For a quick reference on what "good" and "bad" versions of these plots look like (and additional details on how to interpret them) see [this helpful resource](https://data.library.virginia.edu/diagnostic-plots/)
+
+## ANOVA
+
+We use ANalysis Of VAriance (ANOVA) to test for differences in the mean among categorical groups or factors.
+
+We use the `aov()` function to create our ANOVA model using the same syntax as we did with the `lm()` function.
+
+After we have assigned our model, we use the `summary()` function to view the output of the ANOVA test. This summary shows us whether at least one of the categorical groups (e.g. species) differed in terms of the continuous variable (e.g. body mass), but it doesn't tell us specifically which species were different from each other. To do that, we use a Tukey post-hoc test (`TukeyHSD()`) to identify which pairs of species differed from each other.
+
+```{r}
+
+aov_subset <- mammals %>% 
+  mutate(year = year(collectDate)) %>% 
+  filter(year == 2015,
+         sex == "F",
+         taxonID %in% c("PELE", "MIPE", "BLBR"),
+         recapture == "N",
+         !is.na(hindfootLength))
+
+# Specify our model
+aov_fit <- aov(hindfootLength ~ taxonID,
+               data = aov_subset)
+
+# View model output
+summary(aov_fit)
+
+# Conduct Tukey HSD test 
+TukeyHSD(aov_fit)
+
+```
+
+#### Challenge 5! Make a graph to visualize your findings.
+
+Add a chunk to make a ggplot that effectively visualizes the findings of the ANOVA we conducted above!
+
+```{r CHALLENGE 5!}
+
+
+```
+
+------------------------------------------------------------------------
+
+Thank you for joining this session! We hope it's given you some ideas for how you might integrate R into your own classes!
